@@ -3,7 +3,7 @@ FROM openjdk:12-alpine
 MAINTAINER Louis Orleans <louis@orleans.io>
 
 # user-configurable vars
-ENV MINECRAFT_VERSION 18w50a
+# ENV MINECRAFT_VERSION
 ENV EULA false
 ENV RAM_MAX 8G
 ENV RAM_INIT 1g
@@ -17,5 +17,7 @@ VOLUME /data
 
 EXPOSE 25565
 
-CMD /start.sh
+RUN apk add python3 && pip3 install requests
+
+ENTRYPOINT /start.sh
 

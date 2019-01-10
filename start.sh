@@ -10,22 +10,17 @@ fi
 
 if [ ! -f "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" ]; then
   mkdir $JAR_PATH
-
-  case "$MINECRAFT_VERSION" in
-    "18w50a")
-      DOWNLOAD_URL="https://launcher.mojang.com/v1/objects/de0577900a9071758d7f1172dd283bdbe88b7431/server.jar"
-      ;;
-    "1.13.2")
-      DOWNLOAD_URL="https://launcher.mojang.com/v1/objects/3737db93722a9e39eeada7c27e7aca28b144ffa7/server.jar"
-      ;;
-    *)
-      echo "Error: Unknown MINECRAFT_VERSION"
-      exit 1
-      ;;
-  esac
-
-  wget "$DOWNLOAD_URL" -O "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar"
 fi
+
+# apk add python3
+# pip3 install requests
+
+RES=$(python3 /download.py)
+MINECRAFT_VERSION=$(echo $RES | cut -f 1 -d ' ')
+DOWNLOAD_URL=$(echo $RES | cut -f 2 -d ' ')
+DOWNLOAD_SHA1=$(echo $RES | cut -f 3 -d ' ')
+# read MINECRAFT_VERSION DOWNLOAD_URL DOWNLOAD_SHA1 < <(python3 download.py)
+wget "$DOWNLOAD_URL" -O "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar"
 
 # java -server -XX:ParallelGCThreads=7 -Xms$RAM_INIT -Xmx$RAM_MAX -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" nogui --noconsole
 java -server -Xms$RAM_INIT -Xmx$RAM_MAX \
@@ -36,4 +31,3 @@ java -server -Xms$RAM_INIT -Xmx$RAM_MAX \
   -XX:+ParallelRefProcEnabled \
   -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" \
   nogui # --noconsole
-
