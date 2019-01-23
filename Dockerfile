@@ -1,6 +1,6 @@
 FROM openjdk:12-alpine
 
-MAINTAINER Louis Orleans <louis@orleans.io>
+LABEL maintainer="louis@orleans.io"
 
 # user-configurable vars
 # ENV MINECRAFT_VERSION
