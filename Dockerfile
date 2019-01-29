@@ -17,7 +17,7 @@ VOLUME /data
 
 EXPOSE 25565
 
-RUN apk add python3 && pip3 install requests
+RUN apk add python3 && pip3 install -r /requirements.txt
 
 ENTRYPOINT /start.sh
 
