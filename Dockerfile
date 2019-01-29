@@ -21,3 +21,4 @@ RUN apk add python3 && pip3 install -r /requirements.txt
 
 ENTRYPOINT /start.sh
 
+HEALTHCHECK CMD mcstatus localhost status || exit 1
