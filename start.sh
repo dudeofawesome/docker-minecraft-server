@@ -16,9 +16,6 @@ if [ ! "$MINECRAFT_VERSION" ]; then
   exit 1
 fi
 
-# apk add python3
-# pip3 install requests
-
 RES=$(python3 /download.py)
 MINECRAFT_VERSION=$(echo $RES | cut -f 1 -d ' ')
 DOWNLOAD_URL=$(echo $RES | cut -f 2 -d ' ')
