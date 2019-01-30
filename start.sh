@@ -43,4 +43,10 @@ java -server -Xms$RAM_MAX -Xmx$RAM_MAX \
   -jar "$JAR_PATH" \
   nogui # --noconsole
 
+if [ $? -ne 0 ]; then
+  echo "You might have a memory issue"
+  echo "Try decreasing RAM_MAX"
+  exit 1
+fi
+
 echo "Minecraft server stopped"
