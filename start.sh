@@ -8,8 +8,12 @@ else
   exit 1
 fi
 
-if [ ! -f "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" ]; then
-  mkdir $JAR_PATH
+if [ ! "$MINECRAFT_VERSION" ]; then
+  echo "You must set MINECRAFT_VERSION in env."
+  echo "Specify a version of Minecraft, like '1.13.2'"
+  echo "'release' will keep you always up to date, which may mean upgrading before you meant to"
+  echo "'snapshot' will keep you up to date on the latest snapshot"
+  exit 1
 fi
 
 # apk add python3
