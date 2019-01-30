@@ -10,8 +10,10 @@ ENV JAR_DIR /server-jars
 
 COPY . /
 
-WORKDIR /data
 VOLUME /data
+VOLUME /server-jars
+
+WORKDIR /data
 
 EXPOSE 25565
 
