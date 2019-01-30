@@ -35,6 +35,8 @@ if [ ! -f "$JAR_PATH" ]; then
   fi
 fi
 
+echo "Starting Minecraft $MINECRAFT_VERSION server"
+
 # java -server -XX:ParallelGCThreads=7 -Xms$RAM_INIT -Xmx$RAM_MAX -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" nogui --noconsole
 java -server -Xms$RAM_INIT -Xmx$RAM_MAX \
   -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=100 \
@@ -44,3 +46,5 @@ java -server -Xms$RAM_INIT -Xmx$RAM_MAX \
   -XX:+ParallelRefProcEnabled \
   -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" \
   nogui # --noconsole
+
+echo "Minecraft server stopped"
