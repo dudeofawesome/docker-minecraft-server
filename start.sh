@@ -23,8 +23,17 @@ RES=$(python3 /download.py)
 MINECRAFT_VERSION=$(echo $RES | cut -f 1 -d ' ')
 DOWNLOAD_URL=$(echo $RES | cut -f 2 -d ' ')
 DOWNLOAD_SHA1=$(echo $RES | cut -f 3 -d ' ')
-# read MINECRAFT_VERSION DOWNLOAD_URL DOWNLOAD_SHA1 < <(python3 download.py)
-wget "$DOWNLOAD_URL" -O "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar"
+
+JAR_PATH="$JAR_DIR/mc-server-$MINECRAFT_VERSION.jar"
+
+if [ ! -f "$JAR_PATH" ]; then
+  wget "$DOWNLOAD_URL" -O "$JAR_PATH"
+  ACTUAL_SHA1=$(sha1sum "$JAR_PATH" | cut -f 1 -d ' ')
+  if [ "$ACTUAL_SHA1" != "$DOWNLOAD_SHA1" ]; then
+    echo "Server jar's SHA1 did not match!"
+    exit 1
+  fi
+fi
 
 # java -server -XX:ParallelGCThreads=7 -Xms$RAM_INIT -Xmx$RAM_MAX -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" nogui --noconsole
 java -server -Xms$RAM_INIT -Xmx$RAM_MAX \
