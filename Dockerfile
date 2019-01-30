@@ -6,7 +6,7 @@ LABEL maintainer="louis@orleans.io"
 ENV EULA false
 ENV RAM_MAX 8G
 
-ENV JAR_PATH /server-jars
+ENV JAR_DIR /server-jars
 
 COPY . /
 
