@@ -37,14 +37,13 @@ fi
 
 echo "Starting Minecraft $MINECRAFT_VERSION server"
 
-# java -server -XX:ParallelGCThreads=7 -Xms$RAM_INIT -Xmx$RAM_MAX -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" nogui --noconsole
-java -server -Xms$RAM_INIT -Xmx$RAM_MAX \
+java -server -Xms$RAM_MAX -Xmx$RAM_MAX \
   -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=100 \
   -XX:+DisableExplicitGC -XX:TargetSurvivorRatio=90 \
   -XX:G1NewSizePercent=50 -XX:G1MaxNewSizePercent=80 \
   -XX:G1MixedGCLiveThresholdPercent=35 -XX:+AlwaysPreTouch \
   -XX:+ParallelRefProcEnabled \
-  -jar "$JAR_PATH/mc-server-$MINECRAFT_VERSION.jar" \
+  -jar "$JAR_PATH" \
   nogui # --noconsole
 
 echo "Minecraft server stopped"
