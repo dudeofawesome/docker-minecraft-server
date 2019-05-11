@@ -8,6 +8,8 @@ ENV RAM_MAX 8G
 
 ENV JAR_DIR /server-jars
 
+ADD VERSION .
+
 COPY . /
 
 VOLUME /data
