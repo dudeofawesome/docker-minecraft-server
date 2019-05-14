@@ -8,12 +8,12 @@ A Minecraft server Docker image
 
 - `MINECRAFT_VERSION` **required!**\
   This is the version of the Minecraft server you want to run, which must be set.
-  Specify a version of Minecraft, like `1.13.2`
-  `release` will keep you always up to date, which may mean upgrading before you meant to
-  `snapshot` will keep you up to date on the latest snapshot
+  Specify a version of Minecraft, like `1.13.2`\
+  `release` will keep you always up to date, which may mean upgrading before you meant to!\
+  `snapshot` will keep you up to date on the latest snapshot\
 - `EULA` **required to be true!**\
   default: `false`\
-  This must be set to true
+  Mojang requires accepting the [Minecraft EULA](https://account.mojang.com/documents/minecraft_eula). To accept set this to `true`
 - `RAM_MAX`\
   default: `8G`\
   Set this to change the default amount of RAM allocated to the server
