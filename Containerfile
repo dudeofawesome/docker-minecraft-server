@@ -1,4 +1,4 @@
-FROM openjdk:12-alpine
+FROM openjdk:alpine
 
 LABEL maintainer="louis@orleans.io"
 
