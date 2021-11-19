@@ -2,7 +2,7 @@ version: '3'
 
 services:
   minecraft-server:
-    image: 'docker pull ghcr.io/dudeofawesome/minecraft-server/java:latest'
+    image: 'ghcr.io/dudeofawesome/minecraft-server/java:latest'
     environment:
       # 'release' is not a recommended version!
       MINECRAFT_VERSION: 'release'
