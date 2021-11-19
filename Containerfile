@@ -1,4 +1,4 @@
-FROM openjdk:alpine
+FROM openjdk:18-alpine
 
 LABEL maintainer="louis@orleans.io"
 
@@ -10,7 +10,9 @@ ENV JAR_DIR /server-jars
 
 ADD VERSION .
 
-COPY . /
+COPY entrypoint.sh /
+COPY download.py /
+COPY requirements.txt /
 
 VOLUME /data
 VOLUME /server-jars
@@ -21,8 +23,13 @@ EXPOSE 25565
 # RCON port
 EXPOSE 25575
 
-RUN apk add python3 && pip3 install -r /requirements.txt
+RUN apk add python3 py3-pip && \
+  python3 -m pip install -r /requirements.txt
 
-ENTRYPOINT /start.sh
+COPY Containerfile /
+COPY LICENSE /
+COPY README.md /
+
+ENTRYPOINT /entrypoint.sh
 
 HEALTHCHECK CMD mcstatus localhost status || exit 1

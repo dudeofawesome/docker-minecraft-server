@@ -6,7 +6,7 @@ services:
       context: '.'
       dockerfile: 'Containerfile'
     environment:
-      MINECRAFT_VERSION: 'release'
+      MINECRAFT_VERSION: '1.17.1'
       EULA: 'true'
       RAM_MAX: '8G'
     volumes:
