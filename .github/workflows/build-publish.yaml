@@ -35,11 +35,8 @@ jobs:
 
       - name: Publish to Registry
         run: |
-          REPO="ghcr.io/$( \
-            echo ${{ github.repository }} | \
-            tr '[A-Z]' '[a-z]' | \
-            tr --delete 'docker-' \
-          )"
+          IMAGE_NAME="$(echo ${{ github.repository }} | tr '[A-Z]' '[a-z]' | tr --delete 'docker-')"
+          REPO="ghcr.io/$IMAGE_NAME"
           BRANCH=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           VERSION=$BRANCH
 
