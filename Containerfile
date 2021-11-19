@@ -18,6 +18,8 @@ VOLUME /server-jars
 WORKDIR /data
 
 EXPOSE 25565
+# RCON port
+EXPOSE 25575
 
 RUN apk add python3 && pip3 install -r /requirements.txt
 
