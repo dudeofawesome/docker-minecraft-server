@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  minecraft-server:
+    build:
+      context: '.'
+      dockerfile: 'Containerfile'
+    environment:
+      MINECRAFT_VERSION: 'release'
+      EULA: 'true'
+      RAM_MAX: '8G'
+    volumes:
+      - '/usr/local/lib/minecraft-server-java:/data'
+      - '/usr/local/etc/minecraft-server-java:/server-jars'
+    ports:
+      - '25565:25565'
+      - '25565:25565/udp'
+    restart: 'unless-stopped'
