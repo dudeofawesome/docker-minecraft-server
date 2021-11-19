@@ -38,7 +38,7 @@ jobs:
           REPO="ghcr.io/$( \
             echo ${{ github.repository }} | \
             tr '[:upper:]' '[:lower:]' | \
-            tr --delete 'docker-' \
+            sed 's/docker-//' \
           )"
           BRANCH=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           VERSION=$BRANCH
