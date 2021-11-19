@@ -35,10 +35,10 @@ jobs:
 
       - name: Publish to Registry
         run: |
-          REPO="ghcr.io/$(
+          REPO="ghcr.io/$( \
             echo ${{ github.repository }} | \
             tr '[A-Z]' '[a-z]' | \
-            tr --delete 'docker-'
+            tr --delete 'docker-' \
           )"
           BRANCH=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           VERSION=$BRANCH
@@ -54,4 +54,3 @@ jobs:
             docker tag java $REPO/java:latest
             docker push $REPO/java:latest
           fi
-
