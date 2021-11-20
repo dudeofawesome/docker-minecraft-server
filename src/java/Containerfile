@@ -1,4 +1,4 @@
-FROM openjdk:18-alpine
+FROM docker.io/library/openjdk:18-alpine
 
 LABEL maintainer="louis@orleans.io"
 
@@ -8,10 +8,8 @@ ENV RAM_MAX 8G
 
 ENV JAR_DIR /server-jars
 
-ADD VERSION .
-
-COPY entrypoint.sh /
-COPY download.py /
+COPY src/java/entrypoint.sh /
+COPY src/java/download.py /
 COPY requirements.txt /
 
 VOLUME /data
@@ -26,9 +24,11 @@ EXPOSE 25575
 RUN apk add python3 py3-pip && \
   python3 -m pip install -r /requirements.txt
 
-COPY Containerfile /
+COPY src/java/Containerfile /
 COPY LICENSE /
 COPY README.md /
+
+COPY --from=mcrcon_mcrcon /mcrcon .
 
 ENTRYPOINT /entrypoint.sh
 

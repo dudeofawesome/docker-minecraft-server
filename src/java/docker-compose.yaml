@@ -12,6 +12,6 @@ services:
       - '/usr/local/lib/minecraft-server-java:/data'
       - '/usr/local/etc/minecraft-server-java:/server-jars'
     ports:
-      - '25565:25565'
+      - '25565:25565/tcp'
       - '25565:25565/udp'
     restart: 'unless-stopped'

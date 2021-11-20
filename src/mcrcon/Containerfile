@@ -1,0 +1,28 @@
+FROM docker.io/library/alpine AS mcrcon-builder
+
+WORKDIR /
+
+RUN apk add \
+  gcc \
+  git \
+  libc-dev \
+  make \
+  ;
+
+RUN git clone https://github.com/Tiiffi/mcrcon.git
+
+WORKDIR /mcrcon
+
+RUN make
+RUN ls -lha
+
+
+
+FROM docker.io/library/alpine AS mcrcon-runner
+
+LABEL maintainer="louis@orleans.io"
+
+COPY --from=mcrcon-builder /mcrcon/mcrcon /
+
+ENTRYPOINT [ "/mcrcon" ]
+CMD [ "-h" ]

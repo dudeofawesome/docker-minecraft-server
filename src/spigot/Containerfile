@@ -1,0 +1,51 @@
+FROM docker.io/library/openjdk:16-alpine
+
+LABEL maintainer="louis@orleans.io"
+
+# user-configurable vars
+ENV EULA false
+ENV RAM_MAX 8G
+
+ENV JAR_DIR /server-jars
+
+COPY src/spigot/entrypoint.sh /
+COPY src/spigot/download.py /
+COPY requirements.txt /
+
+VOLUME /data
+VOLUME /server-jars
+
+# Game port
+EXPOSE 25565
+# RCON port
+EXPOSE 25575
+
+WORKDIR /mc-server
+
+RUN apk add \
+    git \
+    python3 \
+    py3-pip \
+    wget \
+  && \
+  python3 -m pip install -r /requirements.txt
+
+RUN wget --no-verbose \
+  "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
+
+COPY src/spigot/Containerfile /
+COPY LICENSE /
+COPY README.md /
+
+COPY --from=mcrcon_mcrcon /mcrcon .
+ENV MCRCON_HOST localhost
+ENV MCRCON_PORT 25575
+
+RUN adduser -u 1000 -D minecraft
+USER minecraft
+
+WORKDIR /data
+
+ENTRYPOINT /entrypoint.sh
+
+HEALTHCHECK CMD mcstatus localhost status || exit 1
