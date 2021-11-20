@@ -37,7 +37,7 @@ COPY src/spigot/Containerfile /
 COPY LICENSE /
 COPY README.md /
 
-COPY --from=mcrcon_mcrcon /mcrcon .
+COPY --from=mcrcon /mcrcon .
 ENV MCRCON_HOST localhost
 ENV MCRCON_PORT 25575
 

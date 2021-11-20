@@ -3,18 +3,18 @@ version: '3'
 services:
   minecraft-server:
     build:
-      context: '../../'
-      dockerfile: 'scr/java/Containerfile'
+      context: '../../../'
+      dockerfile: 'src/servers/spigot/Containerfile'
     environment:
-      MINECRAFT_VERSION: '1.17.1'
+      MINECRAFT_VERSION: 'release'
       EULA: 'true'
       RAM_MAX: '8G'
     volumes:
       - 'minecraft-server-spigot-data:/data'
       - 'minecraft-server-spigot-jars:/server-jars'
-    ports:
-      - '25565:25565/tcp'
-      - '25565:25565/udp'
+    # ports:
+    #   - '25565:25565/tcp'
+    #   - '25565:25565/udp'
     restart: 'unless-stopped'
 
 volumes:

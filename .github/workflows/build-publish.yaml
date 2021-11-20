@@ -24,7 +24,7 @@ jobs:
 
       - name: Build
         run: |
-          for image in $(ls src); do
+          for image in mcrcon $(ls src/servers); do
             docker build -f "src/$image/Containerfile" -t "$image" .
           done
 
@@ -48,7 +48,7 @@ jobs:
           echo "REPO = $REPO"
           echo "VERSION = $VERSION"
 
-          for image in $(ls src); do
+          for image in mcrcon $(ls src/servers); do
             docker tag "$image" "$REPO/$image:$VERSION"
             docker push "$REPO/$image:$VERSION"
 

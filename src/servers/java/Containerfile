@@ -28,7 +28,7 @@ COPY src/java/Containerfile /
 COPY LICENSE /
 COPY README.md /
 
-COPY --from=mcrcon_mcrcon /mcrcon .
+COPY --from=mcrcon /mcrcon .
 
 ENTRYPOINT /entrypoint.sh
 
