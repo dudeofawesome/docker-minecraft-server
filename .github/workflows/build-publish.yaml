@@ -24,8 +24,10 @@ jobs:
 
       - name: Build
         run: |
-          for image in mcrcon $(ls src/servers); do
-            docker build -f "src/$image/Containerfile" -t "$image" .
+          docker build -f "src/mcrcon/Containerfile" -t mcrcon .
+
+          for image in $(ls src/servers); do
+            docker build -f "src/servers/$image/Containerfile" -t "$image" .
           done
 
       - name: Login to GitHub Container Registry
