@@ -24,7 +24,9 @@ jobs:
 
       - name: Build
         run: |
-          docker build -f Containerfile -t java .
+          for image in $(ls src); do
+            docker build -f "src/$image/Containerfile" -t "$image" .
+          done
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -46,11 +48,13 @@ jobs:
           echo "REPO = $REPO"
           echo "VERSION = $VERSION"
 
-          docker tag java $REPO/java:$VERSION
-          docker push $REPO/java:$VERSION
+          for image in $(ls src); do
+            docker tag "$image" "$REPO/$image:$VERSION"
+            docker push "$REPO/$image:$VERSION"
 
-          # Use Docker `latest` tag convention
-          if [[ "(master|main)" =~ "$BRANCH" ]]; then
-            docker tag java $REPO/java:latest
-            docker push $REPO/java:latest
-          fi
+            # Use Docker `latest` tag convention
+            if [[ "(master|main)" =~ "$BRANCH" ]]; then
+              docker tag "$image" "$REPO/$image:latest"
+              docker push "$REPO/$image:latest"
+            fi
+          done
