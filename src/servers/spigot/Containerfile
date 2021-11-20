@@ -8,8 +8,8 @@ ENV RAM_MAX 8G
 
 ENV JAR_DIR /server-jars
 
-COPY src/spigot/entrypoint.sh /
-COPY src/spigot/download.py /
+COPY src/servers/spigot/entrypoint.sh /
+COPY src/servers/spigot/download.py /
 COPY requirements.txt /
 
 VOLUME /data
@@ -33,7 +33,7 @@ RUN apk add \
 RUN wget --no-verbose \
   "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
 
-COPY src/spigot/Containerfile /
+COPY src/servers/spigot/Containerfile /
 COPY LICENSE /
 COPY README.md /
 

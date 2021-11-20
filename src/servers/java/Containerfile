@@ -8,8 +8,8 @@ ENV RAM_MAX 8G
 
 ENV JAR_DIR /server-jars
 
-COPY src/java/entrypoint.sh /
-COPY src/java/download.py /
+COPY src/servers/java/entrypoint.sh /
+COPY src/servers/java/download.py /
 COPY requirements.txt /
 
 VOLUME /data
@@ -24,7 +24,7 @@ EXPOSE 25575
 RUN apk add python3 py3-pip && \
   python3 -m pip install -r /requirements.txt
 
-COPY src/java/Containerfile /
+COPY src/servers/java/Containerfile /
 COPY LICENSE /
 COPY README.md /
 
