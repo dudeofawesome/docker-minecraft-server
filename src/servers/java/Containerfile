@@ -1,3 +1,6 @@
+ARG MCRCON_IMAGE=mcrcon
+FROM ${MCRCON_IMAGE} as mcrcon
+
 FROM docker.io/library/openjdk:16-alpine
 
 LABEL maintainer="louis@orleans.io"
@@ -8,27 +11,41 @@ ENV RAM_MAX 8G
 
 ENV JAR_DIR /server-jars
 
-COPY src/servers/java/entrypoint.sh /
-COPY src/servers/java/download.py /
 COPY requirements.txt /
 
 VOLUME /data
 VOLUME /server-jars
 
-WORKDIR /data
-
+# Game port
 EXPOSE 25565
 # RCON port
 EXPOSE 25575
 
-RUN apk add python3 py3-pip && \
+WORKDIR /mc-server
+
+RUN apk add \
+    python3 \
+    py3-pip \
+    wget \
+  && \
   python3 -m pip install -r /requirements.txt
+
+COPY src/servers/java/entrypoint.sh /
+COPY src/servers/java/download.py /
+COPY src/scripts/mc_utils.py /
 
 COPY src/servers/java/Containerfile /
 COPY LICENSE /
 COPY README.md /
 
 COPY --from=mcrcon /mcrcon .
+ENV MCRCON_HOST localhost
+ENV MCRCON_PORT 25575
+
+RUN adduser -u 1000 -g 1001 -D minecraft
+USER minecraft
+
+WORKDIR /data
 
 ENTRYPOINT /entrypoint.sh
 
