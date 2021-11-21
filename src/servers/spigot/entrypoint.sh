@@ -20,8 +20,6 @@ fi
 
 RES=$(python3 /download.py)
 MINECRAFT_VERSION=$(echo $RES | cut -f 1 -d ' ')
-DOWNLOAD_URL=$(echo $RES | cut -f 2 -d ' ')
-DOWNLOAD_SHA1=$(echo $RES | cut -f 3 -d ' ')
 
 JAR_PATH="$JAR_DIR/spigot-$MINECRAFT_VERSION.jar"
 
