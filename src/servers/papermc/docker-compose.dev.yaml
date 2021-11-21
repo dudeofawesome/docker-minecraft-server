@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  mcrcon:
+    build:
+      context: '../../mcrcon'
+      dockerfile: 'Containerfile'
+    entrypoint: echo done
+  minecraft-server:
+    build:
+      context: '../../../'
+      dockerfile: 'src/servers/papermc/Containerfile'
+      args:
+        MCRCON_IMAGE: 'papermc_mcrcon'
+    environment:
+      MINECRAFT_VERSION: 'release'
+      EULA: 'true'
+      RAM_MAX: '2G'
+    # volumes:
+    #   - 'minecraft-server-papermc-data:/data'
+    #   - 'minecraft-server-papermc-jars:/server-jars'
+    # ports:
+    #   - '25565:25565/tcp'
+    #   - '25565:25565/udp'
+    restart: 'unless-stopped'
+
+# volumes:
+#   minecraft-server-papermc-data:
+#   minecraft-server-papermc-jars:
