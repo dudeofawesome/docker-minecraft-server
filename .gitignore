@@ -1,2 +1,5 @@
 # secrets
 *.env
+
+# compiled files
+__pycache__
