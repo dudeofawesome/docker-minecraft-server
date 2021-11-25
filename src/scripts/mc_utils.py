@@ -1,3 +1,4 @@
+import math
 import os
 import requests
 
@@ -30,9 +31,9 @@ def get_java_args(RAM_MAX):
   RAM_MAX = RAM_MAX.upper()
   max_ram = 0
   if RAM_MAX.endswith('G'):
-    max_ram = double(RAM_MAX.replace('G', ''))
+    max_ram = float(RAM_MAX.replace('G', ''))
   elif RAM_MAX.endswith('M'):
-    max_ram = double(RAM_MAX.replace('M', '')) / 1024
+    max_ram = float(RAM_MAX.replace('M', '')) / 1024
 
   G1NewSizePercent = 30
   G1MaxNewSizePercent = 40
@@ -48,21 +49,21 @@ def get_java_args(RAM_MAX):
     InitiatingHeapOccupancyPercent = 20
 
   return ' '.join([
-    f'-Xms{max_ram}G',
-    f'-Xmx{max_ram}G',
+    f'-Xms{math.ceil(max_ram * 1024)}M',
+    f'-Xmx{math.ceil(max_ram * 1024)}M',
     f'-XX:+UseG1GC',
     f'-XX:+ParallelRefProcEnabled',
     f'-XX:MaxGCPauseMillis=200',
     f'-XX:+UnlockExperimentalVMOptions',
     f'-XX:+DisableExplicitGC',
     f'-XX:+AlwaysPreTouch',
-    f'-XX:G1NewSizePercent={G1NewSizePercent}',
-    f'-XX:G1MaxNewSizePercent={G1MaxNewSizePercent}',
-    f'-XX:G1HeapRegionSize={G1HeapRegionSize}M',
-    f'-XX:G1ReservePercent={G1ReservePercent}',
+    f'-XX:G1NewSizePercent={math.ceil(G1NewSizePercent)}',
+    f'-XX:G1MaxNewSizePercent={math.ceil(G1MaxNewSizePercent)}',
+    f'-XX:G1HeapRegionSize={math.ceil(G1HeapRegionSize)}M',
+    f'-XX:G1ReservePercent={math.ceil(G1ReservePercent)}',
     f'-XX:G1HeapWastePercent=5',
     f'-XX:G1MixedGCCountTarget=4',
-    f'-XX:InitiatingHeapOccupancyPercent={InitiatingHeapOccupancyPercent}',
+    f'-XX:InitiatingHeapOccupancyPercent={math.ceil(InitiatingHeapOccupancyPercent)}',
     f'-XX:G1MixedGCLiveThresholdPercent=90',
     f'-XX:G1RSetUpdatingPauseTimePercent=5',
     f'-XX:SurvivorRatio=32',

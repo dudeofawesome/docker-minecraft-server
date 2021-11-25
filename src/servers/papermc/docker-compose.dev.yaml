@@ -5,7 +5,7 @@ services:
     build:
       context: '../../mcrcon'
       dockerfile: 'Containerfile'
-    entrypoint: echo done
+    entrypoint: 'echo done'
   minecraft-server:
     build:
       context: '../../../'

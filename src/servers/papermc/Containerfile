@@ -49,5 +49,6 @@ USER minecraft
 WORKDIR /data
 
 ENTRYPOINT /entrypoint.sh
+# ENTRYPOINT PYTHONPATH=/ python3 -c "import mc_utils; print(mc_utils.get_java_args('$RAM_MAX'))"
 
 HEALTHCHECK CMD mcstatus localhost status || exit 1
