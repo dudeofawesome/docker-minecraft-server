@@ -43,7 +43,7 @@ java -server -Xms$RAM_MAX -Xmx$RAM_MAX \
   -XX:G1MixedGCLiveThresholdPercent=35 -XX:+AlwaysPreTouch \
   -XX:+ParallelRefProcEnabled \
   -jar "$JAR_PATH" \
-  nogui # --noconsole
+  nogui
 
 if [ $? -ne 0 ]; then
   echo "You might have a memory issue"

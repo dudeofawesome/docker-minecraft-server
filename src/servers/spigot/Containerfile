@@ -1,7 +1,7 @@
 ARG MCRCON_IMAGE=mcrcon
 FROM ${MCRCON_IMAGE} as mcrcon
 
-FROM docker.io/library/openjdk:16-alpine
+FROM docker.io/library/openjdk:17-alpine
 
 LABEL maintainer="louis@orleans.io"
 

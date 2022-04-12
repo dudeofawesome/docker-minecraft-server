@@ -1,7 +1,7 @@
 ARG MCRCON_IMAGE=mcrcon
 FROM ${MCRCON_IMAGE} as mcrcon
 
-FROM docker.io/library/openjdk:16-alpine
+FROM docker.io/library/openjdk:17-slim
 
 LABEL maintainer="louis@orleans.io"
 
@@ -10,8 +10,6 @@ ENV EULA false
 ENV RAM_MAX 8G
 
 ENV JAR_DIR /server-jars
-
-COPY requirements.txt /
 
 VOLUME /data
 VOLUME /server-jars
@@ -23,13 +21,16 @@ EXPOSE 25575
 
 WORKDIR /mc-server
 
-RUN apk add \
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install -y \
     git \
     python3 \
-    py3-pip \
+    python3-pip \
     wget \
   && \
-  python3 -m pip install -r /requirements.txt
+  python3 -m pip install \
+    requests
 
 COPY src/servers/papermc/entrypoint.sh /
 COPY src/servers/papermc/download.py /
@@ -43,7 +44,8 @@ COPY --from=mcrcon /mcrcon .
 ENV MCRCON_HOST localhost
 ENV MCRCON_PORT 25575
 
-RUN adduser -u 1000 -g 1001 -D minecraft
+RUN addgroup --gid 1001 minecraft && \
+  adduser --uid 1000 --gid 1001 --disabled-password minecraft
 USER minecraft
 
 WORKDIR /data
@@ -51,4 +53,4 @@ WORKDIR /data
 ENTRYPOINT /entrypoint.sh
 # ENTRYPOINT PYTHONPATH=/ python3 -c "import mc_utils; print(mc_utils.get_java_args('$RAM_MAX'))"
 
-HEALTHCHECK CMD mcstatus localhost status || exit 1
+HEALTHCHECK CMD /mcrcon 'list' || exit 1
